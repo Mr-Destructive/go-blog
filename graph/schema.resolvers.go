@@ -11,26 +11,49 @@ import (
 )
 
 func (r *mutationResolver) CreateArticle(ctx context.Context, input model.NewArticle) (*model.Article, error) {
-	panic(fmt.Errorf("not implemented"))
+	article := model.Article{
+		Title:   input.Title,
+		Content: input.Content,
+		Status:  input.Status,
+	}
+	_, err := r.DB.Model(&article).Insert()
+	if err != nil {
+		return nil, fmt.Errorf("error inserting new Article: %v", err)
+	}
+	return &article, nil
 }
 
-func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (*model.User, error) {
-	var user model.User
-	user.Name = "test"
-	return &user, nil
+func (r *mutationResolver) CreateAuthor(ctx context.Context, input model.NewAuthor) (*model.Author, error) {
+	author := model.Author{
+		Name: input.Name,
+	}
+	_, err := r.DB.Model(&author).Insert()
+	if err != nil {
+		return nil, fmt.Errorf("error inserting new author: %v", err)
+	}
+	return &author, nil
 }
 
 func (r *queryResolver) Article(ctx context.Context) ([]*model.Article, error) {
-	panic(fmt.Errorf("not implemented"))
+	var articles []*model.Article
+
+	err := r.DB.Model(&articles).Select()
+	if err != nil {
+		return nil, err
+	}
+
+	return articles, nil
 }
 
-func (r *queryResolver) User(ctx context.Context) ([]*model.User, error) {
-	var users []*model.User
-	dummyUser := model.User{
-		Name: "admin",
+func (r *queryResolver) Author(ctx context.Context) ([]*model.Author, error) {
+	var authors []*model.Author
+
+	err := r.DB.Model(&authors).Select()
+	if err != nil {
+		return nil, err
 	}
-	users = append(users, &dummyUser)
-	return users, nil
+
+	return authors, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.

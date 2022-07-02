@@ -3,24 +3,25 @@
 package model
 
 type Article struct {
-	ID      string `json:"id"`
-	Title   string `json:"title"`
-	Content string `json:"content"`
-	Status  bool   `json:"status"`
-	User    *User  `json:"user"`
+	ArticleID string  `json:"article_id"`
+	Title     string  `json:"title"`
+	Content   string  `json:"content"`
+	Status    bool    `json:"status"`
+	Author    *Author `json:"author"`
+}
+
+type Author struct {
+	UserID string `json:"user_id"`
+	Name   string `json:"name"`
 }
 
 type NewArticle struct {
-	Title   string `json:"title"`
-	Content string `json:"content"`
-	UserID  string `json:"userId"`
+	Title    string `json:"title"`
+	Content  string `json:"content"`
+	Status   bool   `json:"status"`
+	AuthorID string `json:"AuthorID"`
 }
 
-type NewUser struct {
-	Name string `json:"name"`
-}
-
-type User struct {
-	ID   string `json:"id"`
+type NewAuthor struct {
 	Name string `json:"name"`
 }

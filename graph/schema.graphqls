@@ -3,34 +3,35 @@
 # https://gqlgen.com/getting-started/
 #
 
+type Author{
+  user_id: ID!
+  name: String!
+}
 type Article {
-  id: ID!
+  article_id: ID!
   title: String!
   content: String!
   status: Boolean!
-  user: User!
+  author: Author
 }
 
-type User {
-  id: ID!
-  name: String!
-}
 
 type Query {
   article: [Article!]!
-  user : [User!]!
+  author : [Author!]!
 }
 
 input NewArticle {
   title: String!
   content: String!
-  userId: String!
+  status: Boolean!
+  AuthorID: ID!
 }
 
-input NewUser {
+input NewAuthor {
     name: String!
 }
 type Mutation {
   createArticle(input: NewArticle!): Article!
-  createUser(input: NewUser!): User!
+  createAuthor(input: NewAuthor!): Author!
 }
